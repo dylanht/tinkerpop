@@ -568,6 +568,8 @@ public final class GryoMapper implements Mapper<Kryo> {
                 serializers.forEach(p -> {
                     if (null == p.getValue1())
                         addCustom(p.getValue0());
+                    else if (p.getValue1() instanceof SerializerShim)
+                        addCustom(p.getValue0(), new ShadedSerializerAdapter((SerializerShim) p.getValue1()));
                     else if (p.getValue1() instanceof Serializer)
                         addCustom(p.getValue0(), (Serializer) p.getValue1());
                     else if (p.getValue1() instanceof Function)
